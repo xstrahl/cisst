@@ -10,7 +10,7 @@
 #
 # --- end cisst license ---
 
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 3.5)
 
 # create a list of libraries needed for this project
 set (REQUIRED_CISST_LIBRARIES cisstCommon cisstVector cisstOSAbstraction cisstMultiTask cisstStereoVision)

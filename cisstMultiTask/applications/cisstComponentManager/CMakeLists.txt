@@ -13,7 +13,7 @@
 # name of project and executable
 project (cisstComponentManager)
 
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 3.5)
 
 # create a list of libraries needed for this project
 set (REQUIRED_CISST_LIBRARIES cisstCommon cisstOSAbstraction cisstMultiTask)
