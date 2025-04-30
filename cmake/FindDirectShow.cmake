@@ -25,26 +25,14 @@ set(DIRECTSHOW_FOUND "NO")
 if(WIN32)
     set(SVL_WIN64 FALSE)
     message(STATUS "Searching for DirectShow on Windows")
-    # Note that newer versions of MSVC generators as well as newer versions of CMake do not include the "bitness" of the
-    # generator.
-    if("${CMAKE_GENERATOR}" MATCHES "(Win64|IA64)")
-        set(SVL_WIN64 TRUE)
-    endif("${CMAKE_GENERATOR}" MATCHES "(Win64|IA64)")
 
     # One more check for bitness In CMake 3.1 and up we can use CMAKE_GENERATOR_PLATFORM. For now assume that systems
     # that are still building with older versions of CMake are not using the latest build tools.
-    if(NOT SVL_WIN64
-       AND ${CMAKE_MAJOR_VERSION} GREATER_EQUAL 3
-       AND ${CMAKE_MINOR_VERSION} GREATER_EQUAL 1
-    )
+    if(NOT SVL_WIN64)
         if("${CMAKE_GENERATOR_PLATFORM}" MATCHES "(Win64|IA64|x64)")
             set(SVL_WIN64 TRUE)
         endif("${CMAKE_GENERATOR_PLATFORM}" MATCHES "(Win64|IA64|x64)")
-    endif(
-        NOT SVL_WIN64
-        AND ${CMAKE_MAJOR_VERSION} GREATER_EQUAL 3
-        AND ${CMAKE_MINOR_VERSION} GREATER_EQUAL 1
-    )
+    endif(NOT SVL_WIN64)
 
     set(PROGRAMFILES_DIR "$ENV{SystemDrive}/Program Files")
     set(PROGRAMFILES_X86_DIR "$ENV{SystemDrive}/Program Files (x86)")
