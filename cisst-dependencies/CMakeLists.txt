@@ -33,18 +33,15 @@ endif (CISST_HAS_OPENGL)
 # Support for QT
 
 # first try to find Qt5
-set (CISST_QT5_PACKAGES Qt5Core Qt5Xml Qt5XmlPatterns Qt5Widgets Qt5Gui Qt5OpenGL)
+set (CISST_QT5_COMPONENTS Core Xml XmlPatterns Widgets Gui OpenGL)
 
 set (CISST_QT5_FOUND ON)
-foreach (package ${CISST_QT5_PACKAGES})
-  find_package (${package} QUIET)
-  if (${package}_FOUND)
-    cisst_cmake_debug ("Found ${package}")
-  else ()
-    message ("Looking for Qt5: can't find ${package}")
-    set (CISST_QT5_FOUND OFF)
-  endif ()
-endforeach ()
+find_package (Qt5 COMPONENTS ${CISST_QT5_COMPONENTS} QUIET)
+if (QT_FOUND AND NOT (CISST_HAS_QT4)) 
+  set (CISST_QT5_FOUND ON)
+else (QT_FOUND AND NOT (CISST_HAS_QT4))
+  set (CISST_QT5_FOUND OFF)
+endif(QT_FOUND AND NOT (CISST_HAS_QT4))
 
 # if Qt 5 has been found, offer it by default
 if (CISST_QT5_FOUND)
@@ -79,9 +76,9 @@ endif ()
 # Qt5: if detected or if user requests it
 if (CISST_HAS_QT5)
   # Qt5 is now required
-  foreach (package ${CISST_QT5_PACKAGES})
-    find_package (${package} REQUIRED)
-    cisst_set_package_settings (cisstQt ${package} PACKAGES package)
+  find_package (Qt5 REQUIRED COMPONENTS ${CISST_QT5_COMPONENTS})
+  foreach (package ${CISST_QT5_COMPONENTS})
+    cisst_set_package_settings (cisstQt "Qt5${package}" PACKAGES package)
   endforeach ()
 else (CISST_HAS_QT5)
   cisst_unset_all_package_settings (cisstQt Qt5)
